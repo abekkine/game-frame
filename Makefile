@@ -2,7 +2,8 @@ TARGET=gametest
 
 SOURCES=main.cpp \
 		Display.cpp \
-		Game.cpp
+		Game.cpp \
+		SampleLayer.cpp
 
 OBJECTS=$(SOURCES:%.cpp=%.o)
 
@@ -22,4 +23,4 @@ memcheck: all
 	valgrind ./$(TARGET)
 
 memdetail: all
-	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no ./$(TARGET)
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --suppressions=gf.supp ./$(TARGET)

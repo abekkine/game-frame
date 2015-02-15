@@ -1,4 +1,5 @@
 // Copyright 2015 A.Bekkine
+#include "SampleLayer.h"
 #include "Game.h"
 
 Game::Game() {}
@@ -10,6 +11,8 @@ Game::~Game() {
 void Game::Init() {
     _display = new Display();
 
+    _display->AddLayer(new SampleLayer());
+
     _display->Init();
 }
 
@@ -18,8 +21,7 @@ void Game::Exit() {
 }
 
 void Game::Run() {
-
-    while ( ! _display->QuitCondition() ) {
+    while ( !_display->QuitCondition() ) {
         _display->Update();
         _display->PollEvents();
     }

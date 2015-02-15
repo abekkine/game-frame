@@ -1,4 +1,6 @@
 // Copyright 2015 A.Bekkine
+#include <vector>
+
 #include "Display.h"
 
 Display::Display() {
@@ -9,11 +11,22 @@ Display::Display() {
 }
 
 Display::~Display() {
+    CleanupLayers();
+
     SDL_Quit();
 }
 
 bool Display::QuitCondition() {
     return _quit_condition;
+}
+
+void Display::CleanupLayers() {
+    DisplayLayer* layer;
+    while ( !_layers.empty() ) {
+        layer = _layers.back();
+        delete layer;
+        _layers.pop_back();
+    }
 }
 
 bool Display::Init() {
@@ -63,32 +76,43 @@ void Display::Reshape(int width, int height) {
 }
 
 void Display::PollEvents() {
-
-    while( SDL_PollEvent(&_event) ) {
-        switch( _event.type ) {
+    while ( SDL_PollEvent(&_event) ) {
+        switch ( _event.type ) {
             case SDL_QUIT:
                 _quit_condition = true;
                 break;
             case SDL_KEYDOWN:
-                if(_event.key.keysym.sym == 27) {
+                if (_event.key.keysym.sym == 27) {
                     _quit_condition = true;
                 }
                 break;
-
-
         }
     }
 }
 
-void Display::Update() {
+void Display::PreRender() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // Render a simple shape.
-    glColor3d(1.0, 1.0, 1.0);
-    glBegin(GL_TRIANGLES);
-        glVertex2d(0.0, 0.75);
-        glVertex2d(0.65, -0.375);
-        glVertex2d(-0.65, -0.375);
-    glEnd();
+}
 
+void Display::PostRender() {
     SDL_GL_SwapBuffers();
+}
+
+void Display::RenderLayers() {
+    std::vector< DisplayLayer* >::const_iterator iLayer;
+    for (iLayer = _layers.begin(); iLayer != _layers.end(); ++iLayer) {
+        (*iLayer)->Render();
+    }
+}
+
+void Display::AddLayer(DisplayLayer* layer) {
+    _layers.push_back(layer);
+}
+
+void Display::Update() {
+    PreRender();
+
+    RenderLayers();
+
+    PostRender();
 }

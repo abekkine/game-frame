@@ -1,0 +1,48 @@
+{
+    <GL_Cond>
+    Memcheck:Cond
+    ...
+    obj:*libGL*
+    ...
+}
+
+{
+    <GL_Leak>
+    Memcheck:Leak
+    ...
+    obj:*libGL*
+    ...
+}
+
+{
+    <SDL_Cond>
+    Memcheck:Cond
+    ...
+    obj:*libSDL*
+    ...
+}
+
+{
+    <SDL_Leak>
+    Memcheck:Leak
+    ...
+    obj:*libSDL*
+    ...
+}
+
+{
+    <X11_Leak>
+    Memcheck:Leak
+    ...
+    obj:*libX11*
+    ...
+}
+
+{
+    <DLOpen_Leak>
+    Memcheck:Leak
+    ...
+    fun:_dl_open
+    ...
+}
+
