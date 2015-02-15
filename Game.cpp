@@ -18,10 +18,9 @@ void Game::Exit() {
 }
 
 void Game::Run() {
-    int count = 1000;
 
-    while ( count > 0 ) {
+    while ( ! _display->QuitCondition() ) {
         _display->Update();
-        count--;
+        _display->PollEvents();
     }
 }

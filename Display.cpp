@@ -3,12 +3,17 @@
 
 Display::Display() {
     _screen = 0;
-    _screen_width = 500;
-    _screen_height = 500;
+    _screen_width = 800;
+    _screen_height = 800;
+    _quit_condition = false;
 }
 
 Display::~Display() {
     SDL_Quit();
+}
+
+bool Display::QuitCondition() {
+    return _quit_condition;
 }
 
 bool Display::Init() {
@@ -55,6 +60,24 @@ void Display::Reshape(int width, int height) {
     glOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void Display::PollEvents() {
+
+    while( SDL_PollEvent(&_event) ) {
+        switch( _event.type ) {
+            case SDL_QUIT:
+                _quit_condition = true;
+                break;
+            case SDL_KEYDOWN:
+                if(_event.key.keysym.sym == 27) {
+                    _quit_condition = true;
+                }
+                break;
+
+
+        }
+    }
 }
 
 void Display::Update() {
