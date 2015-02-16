@@ -16,10 +16,6 @@ Display::~Display() {
     SDL_Quit();
 }
 
-bool Display::QuitCondition() {
-    return _quit_condition;
-}
-
 void Display::CleanupLayers() {
     DisplayLayer* layer;
     while ( !_layers.empty() ) {
@@ -73,21 +69,6 @@ void Display::Reshape(int width, int height) {
     glOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-}
-
-void Display::PollEvents() {
-    while ( SDL_PollEvent(&_event) ) {
-        switch ( _event.type ) {
-            case SDL_QUIT:
-                _quit_condition = true;
-                break;
-            case SDL_KEYDOWN:
-                if (_event.key.keysym.sym == 27) {
-                    _quit_condition = true;
-                }
-                break;
-        }
-    }
 }
 
 void Display::PreRender() {

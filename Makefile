@@ -3,6 +3,9 @@ TARGET=gametest
 SOURCES=main.cpp \
 		Display.cpp \
 		Game.cpp \
+		Volume.cpp \
+		PanZoom.cpp \
+		Event.cpp \
 		SampleLayer.cpp
 
 OBJECTS=$(SOURCES:%.cpp=%.o)

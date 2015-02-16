@@ -3,6 +3,7 @@
 #define GAME_H_
 
 #include "Display.h"
+#include "Event.h"
 
 class Game {
  public:
@@ -14,6 +15,7 @@ class Game {
 
  private:
     Display* _display;
+    Event* _event;
 };
 
 #endif  // GAME_H_

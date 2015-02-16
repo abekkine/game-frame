@@ -15,8 +15,6 @@ class Display {
     ~Display();
     bool Init();
     void Update();
-    bool QuitCondition();
-    void PollEvents();
     void AddLayer(DisplayLayer* layer);
 
  private:
@@ -32,7 +30,6 @@ class Display {
     int _screen_width;
     int _screen_height;
     SDL_Surface* _screen;
-    SDL_Event _event;
     std::vector< DisplayLayer* > _layers;
 };
 

@@ -10,6 +10,7 @@ Game::~Game() {
 
 void Game::Init() {
     _display = new Display();
+    _event = new Event();
 
     _display->AddLayer(new SampleLayer());
 
@@ -21,8 +22,8 @@ void Game::Exit() {
 }
 
 void Game::Run() {
-    while ( !_display->QuitCondition() ) {
+    while ( !_event->QuitCondition() ) {
         _display->Update();
-        _display->PollEvents();
+        _event->Update();
     }
 }
