@@ -69,9 +69,9 @@ void Event::KeyEvent(EventCallback::StateType state) {
     SDL_KeyboardEvent key = _event.key;
 
     std::cout << key.keysym.sym << " : " << state << std::endl;
-//                if (_event.key.keysym.sym == 27) {
-//                    _quit_condition = true;
-//                }
+    if (_event.key.keysym.sym == 27) {
+        _quit_condition = true;
+    }
 }
 
 void Event::ButtonEvent(EventCallback::StateType state) {
