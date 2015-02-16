@@ -5,7 +5,9 @@
 
 #include "Event.h"
 
-Event::Event() {}
+Event::Event() {
+    InitVariables();
+}
 
 Event::~Event() {}
 
@@ -14,6 +16,7 @@ void Event::Update() {
 }
 
 void Event::InitVariables() {
+    memset(&_event, 0, sizeof(_event));
     _quit_condition = false;
     _mouse.x = 0;
     _mouse.y = 0;
@@ -55,8 +58,8 @@ void Event::MotionEvent() {
     eInfo.button = EventCallback::bt_NONE;
     eInfo.state = EventCallback::st_NONE;
     eInfo.key = -1;
-    eInfo.x = motion.x;
-    eInfo.y = motion.y;
+    eInfo.x = _mouse.x;
+    eInfo.y = _mouse.y;
 
     // TODO(abekkine) : PanUpdate() and ZoomUpdate() reside here.
     std::vector<EventCallback *>::const_iterator i;
@@ -67,10 +70,23 @@ void Event::MotionEvent() {
 
 void Event::KeyEvent(EventCallback::StateType state) {
     SDL_KeyboardEvent key = _event.key;
+    EventCallback::EventInfo eInfo;
 
-    std::cout << key.keysym.sym << " : " << state << std::endl;
-    if (_event.key.keysym.sym == 27) {
+    // Exit condition check.
+    if ( key.keysym.sym == 27 ) {
         _quit_condition = true;
+    }
+
+    eInfo.event = EventCallback::et_KEY;
+    eInfo.button = EventCallback::bt_NONE;
+    eInfo.state = state;
+    eInfo.key = key.keysym.sym;
+    eInfo.x = _mouse.x;
+    eInfo.y = _mouse.y;
+
+    std::vector<EventCallback *>::const_iterator i;
+    for ( i = _key_callbacks.begin(); i != _key_callbacks.end(); ++i ) {
+        (*i)->Call(eInfo);
     }
 }
 

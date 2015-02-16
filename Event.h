@@ -43,7 +43,7 @@ class EventCallback {
 
  public:
     virtual ~EventCallback() {}
-    virtual void Call(const EventInfo event) = 0;
+    virtual void Call(const EventInfo& event) = 0;
 };
 
 class Event {

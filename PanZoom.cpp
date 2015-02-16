@@ -30,4 +30,13 @@ void PanZoom::InitVariables() {
     _zoom_start = 0;
     _zoom_total = 0;
     _speed_factor = 1;
+
+    buttonCallback = new PanZoomButtonCallback();
+    motionCallback = new PanZoomMotionCallback();
 }
+
+void PanZoom::RegisterCallbacks(Event* event) {
+    event->RegisterCallback(EventCallback::et_BUTTON, buttonCallback);
+    event->RegisterCallback(EventCallback::et_MOTION, motionCallback);
+}
+

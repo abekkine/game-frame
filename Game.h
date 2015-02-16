@@ -4,6 +4,7 @@
 
 #include "Display.h"
 #include "Event.h"
+#include "PanZoom.h"
 
 class Game {
  public:

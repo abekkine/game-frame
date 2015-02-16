@@ -15,10 +15,13 @@ void Game::Init() {
     _display->AddLayer(new SampleLayer());
 
     _display->Init();
+
+    PanZoom::Instance()->RegisterCallbacks(_event);
 }
 
 void Game::Exit() {
     delete _display;
+    delete _event;
 }
 
 void Game::Run() {
