@@ -22,6 +22,9 @@ void Game::Init() {
 void Game::Exit() {
     delete _display;
     delete _event;
+
+    PanZoom* instance = PanZoom::Instance();
+    delete instance;
 }
 
 void Game::Run() {

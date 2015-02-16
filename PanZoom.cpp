@@ -17,7 +17,10 @@ PanZoom::PanZoom() {
     InitVariables();
 }
 
-PanZoom::~PanZoom() {}
+PanZoom::~PanZoom() {
+    delete buttonCallback;
+    delete motionCallback;
+}
 
 void PanZoom::InitVariables() {
     _pan_mode = false;
