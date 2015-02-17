@@ -7,22 +7,24 @@
 #include "Vector.h"
 #include "Event.h"
 
+class PanZoom;
+
 class PanZoomButtonCallback : public EventCallback {
  public:
-    PanZoomButtonCallback() {}
+    explicit PanZoomButtonCallback(PanZoom* instance);
     ~PanZoomButtonCallback() {}
-    virtual void Call(const EventInfo& event) {
-        std::cout << event.button << " : " << event.state << std::endl;
-    }
+    virtual void Call(const EventInfo& event);
+ private:
+    PanZoom* _pzInstance;
 };
 
 class PanZoomMotionCallback : public EventCallback {
  public:
-    PanZoomMotionCallback() {}
+    explicit PanZoomMotionCallback(PanZoom* instance);
     ~PanZoomMotionCallback() {}
-    virtual void Call(const EventInfo& event) {
-        std::cout << event.x << ", " << event.y << std::endl;
-    }
+    virtual void Call(const EventInfo& event);
+ private:
+    PanZoom* _pzInstance;
 };
 
 class PanZoom {
@@ -30,16 +32,23 @@ class PanZoom {
     static PanZoom* _instance;
     PanZoom();
     void InitVariables();
+    void ProcessPan(const EventCallback::EventInfo& event);
+    void ProcessZoom(const EventCallback::EventInfo& event);
+    void PanUpdate();
+    void ZoomUpdate();
 
  public:
     static PanZoom* Instance();
     ~PanZoom();
     void RegisterCallbacks(Event* event);
+    void ButtonEvent(const EventCallback::EventInfo& event);
+    void MotionEvent(const EventCallback::EventInfo& event);
 
  private:
     bool _pan_mode;
     bool _zoom_mode;
     int _zoom_delta;
+    Vector2i _cursor;
     Vector2i _pan_delta;
     Vector2i _pan_start;
     int _zoom_start;
