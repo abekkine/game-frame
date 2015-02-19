@@ -53,6 +53,7 @@ void PanZoom::InitVariables() {
     _zoom_start = 0;
     _zoom_total = 0;
     _speed_factor = 1;
+    _viewport = 0;
 
     buttonCallback = new PanZoomButtonCallback(this);
     motionCallback = new PanZoomMotionCallback(this);
@@ -85,6 +86,10 @@ void PanZoom::MotionEvent(const EventCallback::EventInfo& event) {
 
     PanUpdate();
     ZoomUpdate();
+
+    if(_viewport != 0 && (_pan_mode != 0 || _zoom_mode != 0) ) {
+        _viewport->Update(_pan_delta.x, _pan_delta.y, _zoom_delta);
+    }
 }
 
 void PanZoom::ProcessPan(const EventCallback::EventInfo& event) {
@@ -109,13 +114,9 @@ void PanZoom::ProcessZoom(const EventCallback::EventInfo& event) {
 
 void PanZoom::PanUpdate() {
     if ( _pan_mode ) {
+        _zoom_delta = 0;
         _pan_delta.x = (_cursor.x - _pan_start.x) * _speed_factor;
         _pan_delta.y = (_cursor.y - _pan_start.y) * _speed_factor;
-
-        // TODO(abekkine) : Pan Command to Viewport.
-        std::cout << "pan delta ( ";
-        std::cout << _pan_delta.x << ", ";
-        std::cout << _pan_delta.y << " )" << std::endl;
 
         _pan_start.x = _cursor.x;
         _pan_start.y = _cursor.y;
@@ -124,12 +125,15 @@ void PanZoom::PanUpdate() {
 
 void PanZoom::ZoomUpdate() {
     if ( _zoom_mode ) {
+        _pan_delta.x = 0;
+        _pan_delta.y = 0;
         _zoom_delta = (_cursor.y - _zoom_start) * _speed_factor;
-
-        // TODO(abekkine) : Zoom Command to Viewport.
-        std::cout << "zoom delta ( " << _zoom_delta << " )" << std::endl;
 
         _zoom_start = _cursor.y;
     }
+}
+
+void PanZoom::RegisterViewport(Viewport* viewport) {
+    _viewport = viewport;
 }
 

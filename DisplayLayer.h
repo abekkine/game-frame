@@ -2,7 +2,7 @@
 #ifndef DISPLAYLAYER_H_
 #define DISPLAYLAYER_H_
 
-#include "Volume.h"
+#include "Viewport.h"
 
 class DisplayLayer {
  public:
@@ -10,7 +10,7 @@ class DisplayLayer {
     virtual void Render() = 0;
 
  protected:
-    Volume _viewport;
+    Viewport _viewport;
 };
 
 #endif  // DISPLAYLAYER_H_

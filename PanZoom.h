@@ -6,6 +6,7 @@
 
 #include "Vector.h"
 #include "Event.h"
+#include "Viewport.h"
 
 class PanZoom;
 
@@ -40,6 +41,7 @@ class PanZoom {
  public:
     static PanZoom* Instance();
     ~PanZoom();
+    void RegisterViewport(Viewport* viewport);
     void RegisterCallbacks(Event* event);
     void ButtonEvent(const EventCallback::EventInfo& event);
     void MotionEvent(const EventCallback::EventInfo& event);
@@ -54,6 +56,7 @@ class PanZoom {
     int _zoom_start;
     int _zoom_total;
     int _speed_factor;
+    Viewport* _viewport;
 
  public:
     PanZoomButtonCallback* buttonCallback;

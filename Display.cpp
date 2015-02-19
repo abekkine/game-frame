@@ -1,4 +1,5 @@
 // Copyright 2015 A.Bekkine
+#include <iostream>
 #include <vector>
 
 #include "Display.h"
@@ -64,11 +65,6 @@ void Display::Reshape(int width, int height) {
     }
 
     glViewport(0, 0, width, height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
 }
 
 void Display::PreRender() {

@@ -3,7 +3,7 @@ TARGET=gametest
 SOURCES=main.cpp \
 		Display.cpp \
 		Game.cpp \
-		Volume.cpp \
+		Viewport.cpp \
 		PanZoom.cpp \
 		Event.cpp \
 		SampleLayer.cpp
